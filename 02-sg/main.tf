@@ -150,3 +150,22 @@ resource "aws_security_group_rule" "ansible_ingress_rule" {
   cidr_blocks = ["0.0.0.0/0"]
   security_group_id = module.ansible_sg.sg_id
 }
+
+# as  part of jenkins-agent connection to make backend application deployment
+resource "aws_security_group_rule" "backend_default_vpc" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks = ["172.31.0.0/16"]
+  security_group_id = module.backend_sg.sg_id
+}
+# as  part of jenkins-agent connection to make frontend application deployment
+resource "aws_security_group_rule" "frontend_default_vpc" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks = ["172.31.0.0/16"]
+  security_group_id = module.frontend_sg.sg_id
+}
